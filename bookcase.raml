@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: Bookcase HTTP接口
+version: 0.0.1
+baseUri: http://127.0.0.1:8080/bookcase
+types:
+  TestType:
+    type: object
+    properties:
+      id: number
+      optional?: string
+      expanded:
+        type: object
+        properties:
+          count: number
+/booklist:
+  get:
+
+/books:
+  put:
+
+/geeklist:
+  get:
+
+/geeks:
+  get:
+
+/orders:
+  get:
+  put:
