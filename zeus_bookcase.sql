@@ -3,14 +3,14 @@ Navicat MySQL Data Transfer
 
 Source Server         : zeus
 Source Server Version : 50546
-Source Host           : 127.0.0.1:3306
+Source Host           : localhost:3306
 Source Database       : zeus_bookcase
 
 Target Server Type    : MYSQL
 Target Server Version : 50546
 File Encoding         : 65001
 
-Date: 2016-08-28 14:56:36
+Date: 2016-11-19 17:20:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,24 +31,36 @@ CREATE TABLE `account` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of account
+-- ----------------------------
+INSERT INTO `account` VALUES ('1', 'zeus', '123456', null, null, null, null);
+INSERT INTO `account` VALUES ('4', 'coder', '123456', null, null, null, null);
+
+-- ----------------------------
 -- Table structure for book
 -- ----------------------------
 DROP TABLE IF EXISTS `book`;
 CREATE TABLE `book` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `book_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `category` varchar(255) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `isbn` varchar(255) DEFAULT NULL,
-  `pages` varchar(255) DEFAULT NULL,
-  `price` varchar(20) DEFAULT NULL,
-  `pub_date` varchar(255) DEFAULT NULL,
-  `publisher` varchar(255) DEFAULT NULL,
-  `rating` varchar(255) DEFAULT NULL,
-  `summary` varchar(255) DEFAULT NULL,
-  `authors` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `authors` varchar(255) NOT NULL,
+  `category` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `isbn` varchar(255) NOT NULL,
+  `pages` varchar(255) NOT NULL,
+  `number` int(11) NOT NULL,
+  `price` varchar(20) NOT NULL,
+  `pub_date` varchar(255) NOT NULL,
+  `publisher` varchar(255) NOT NULL,
+  `rating` varchar(255) NOT NULL,
+  `summary` varchar(255) NOT NULL,
+  PRIMARY KEY (`book_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of book
+-- ----------------------------
+INSERT INTO `book` VALUES ('1', 'JavaScript高级程序设计', 'Nicholas', '1', '1', '9787115275790', '365', '3', '12', '2017-01-26', 'Zeus出版社', '3', '123');
 
 -- ----------------------------
 -- Table structure for booklist
@@ -65,6 +77,10 @@ CREATE TABLE `booklist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of booklist
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for geek
 -- ----------------------------
 DROP TABLE IF EXISTS `geek`;
@@ -75,6 +91,10 @@ CREATE TABLE `geek` (
   `user_image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of geek
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for order
@@ -91,4 +111,8 @@ CREATE TABLE `order` (
   `book_price` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of order
+-- ----------------------------
 SET FOREIGN_KEY_CHECKS=1;
