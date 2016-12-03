@@ -13,10 +13,12 @@ File Encoding         : 65001
 Date: 2016-11-19 17:20:27
 */
 
-SET FOREIGN_KEY_CHECKS=0;
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for account
+--  Table structure for `account`
 -- ----------------------------
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account` (
@@ -31,20 +33,21 @@ CREATE TABLE `account` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of account
+--  Records of `account`
 -- ----------------------------
-INSERT INTO `account` VALUES ('1', 'zeus', '123456', null, null, null, null);
-INSERT INTO `account` VALUES ('4', 'coder', '123456', null, null, null, null);
+BEGIN;
+INSERT INTO `account` VALUES ('1', 'zeus', '123456', null, null, null, null), ('4', 'coder', '123456', null, null, null, null);
+COMMIT;
 
 -- ----------------------------
--- Table structure for book
+--  Table structure for `book`
 -- ----------------------------
 DROP TABLE IF EXISTS `book`;
 CREATE TABLE `book` (
   `book_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `authors` varchar(255) NOT NULL,
-  `category` varchar(255) NOT NULL,
+  `category` int(255) NOT NULL,
   `image` varchar(255) NOT NULL,
   `isbn` varchar(255) NOT NULL,
   `pages` varchar(255) NOT NULL,
@@ -55,15 +58,17 @@ CREATE TABLE `book` (
   `rating` varchar(255) NOT NULL,
   `summary` varchar(255) NOT NULL,
   PRIMARY KEY (`book_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of book
+--  Records of `book`
 -- ----------------------------
-INSERT INTO `book` VALUES ('1', 'JavaScript高级程序设计', 'Nicholas', '1', '1', '9787115275790', '365', '3', '12', '2017-01-26', 'Zeus出版社', '3', '123');
+BEGIN;
+INSERT INTO `book` VALUES ('1', 'JavaScript高级程序设计', 'Nicholas', '1', '1', '9787115275790', '365', '3', '65', '2017-01-26', 'Zeus出版社', '3', '123'), ('2', 'JavaScript权威指南', 'Zeus', '2', '2', '9787115275791', '362', '4', '45', '2017-01-26', 'Zeus出版社', '3', '456'), ('3', 'JavaScript忍者秘籍', 'lvzimou', '3', '3', '9787115275792', '392', '5', '56', '2017-01-26', 'Zeus出版社', '5', '789');
+COMMIT;
 
 -- ----------------------------
--- Table structure for booklist
+--  Table structure for `booklist`
 -- ----------------------------
 DROP TABLE IF EXISTS `booklist`;
 CREATE TABLE `booklist` (
@@ -77,11 +82,24 @@ CREATE TABLE `booklist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of booklist
+--  Table structure for `category`
 -- ----------------------------
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Table structure for geek
+--  Records of `category`
+-- ----------------------------
+BEGIN;
+INSERT INTO `category` VALUES ('1', '技术'), ('2', '科学'), ('3', '心理');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `geek`
 -- ----------------------------
 DROP TABLE IF EXISTS `geek`;
 CREATE TABLE `geek` (
@@ -93,11 +111,7 @@ CREATE TABLE `geek` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of geek
--- ----------------------------
-
--- ----------------------------
--- Table structure for order
+--  Table structure for `order`
 -- ----------------------------
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
@@ -113,6 +127,23 @@ CREATE TABLE `order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of order
+--  Table structure for `zone`
 -- ----------------------------
-SET FOREIGN_KEY_CHECKS=1;
+DROP TABLE IF EXISTS `zone`;
+CREATE TABLE `zone` (
+  `zone_id` int(11) NOT NULL AUTO_INCREMENT,
+  `zone_code` varchar(11) NOT NULL,
+  `zone_name` varchar(255) NOT NULL,
+  `parent_code` varchar(11) NOT NULL DEFAULT '0',
+  `parent_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`zone_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+--  Records of `zone`
+-- ----------------------------
+BEGIN;
+INSERT INTO `zone` VALUES ('1', '440000', '广东省', '0', '0'), ('2', '450000', '广西壮族自治区', '0', '0'), ('3', '440100', '广州市', '440000', '广东省'), ('4', '440200', '深圳市', '440000', '广东省'), ('5', '440101', '天河区', '440100', '广州市'), ('6', '440102', '越秀区', '440100', '广州市'), ('7', '440103', '海珠区', '440100', '广州市'), ('8', '440201', '宝安区', '440200', '深圳市'), ('9', '440202', '罗湖区', '440200', '深圳市'), ('10', '450100', '桂林市', '450000', '广西壮族自治区'), ('11', '450101', '城区', '450100', '桂林市'), ('12', '460000', '湖南省', '0', '0'), ('13', '460100', '长沙市', '460000', '湖南省'), ('14', '460200', '常德市', '460000', '湖南省'), ('15', '460101', '马栏山', '460100', '长沙市'), ('16', '460201', '常德镇', '460200', '常德市');
+COMMIT;
+
+SET FOREIGN_KEY_CHECKS = 1;
