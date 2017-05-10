@@ -1,20 +1,18 @@
 /*
-Navicat MySQL Data Transfer
+ Navicat MySQL Data Transfer
 
-Source Server         : zeus
-Source Server Version : 50546
-Source Host           : localhost:3306
-Source Database       : zeus_bookcase
+ Source Server         : zeus
+ Source Server Version : 50716
+ Source Host           : localhost
+ Source Database       : bookcase
 
-Target Server Type    : MYSQL
-Target Server Version : 50546
-File Encoding         : 65001
+ Target Server Version : 50716
+ File Encoding         : utf-8
 
-Date: 2016-11-19 17:20:27
+ Date: 05/10/2017 23:38:13 PM
 */
 
-
-SET NAMES utf8mb4;
+SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
@@ -40,6 +38,19 @@ INSERT INTO `account` VALUES ('1', 'zeus', '123456', null, null, null, null), ('
 COMMIT;
 
 -- ----------------------------
+--  Table structure for `article`
+-- ----------------------------
+DROP TABLE IF EXISTS `article`;
+CREATE TABLE `article` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `author` varchar(255) DEFAULT NULL,
+  `date` varchar(255) DEFAULT NULL,
+  `content` longblob,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 --  Table structure for `book`
 -- ----------------------------
 DROP TABLE IF EXISTS `book`;
@@ -52,11 +63,17 @@ CREATE TABLE `book` (
   `isbn` varchar(255) NOT NULL,
   `pages` varchar(255) NOT NULL,
   `number` int(11) NOT NULL,
-  `price` varchar(20) NOT NULL,
+  `price` decimal(20,2) NOT NULL,
   `pub_date` varchar(255) NOT NULL,
   `publisher` varchar(255) NOT NULL,
   `rating` varchar(255) NOT NULL,
+  `state` int(1) DEFAULT '0' COMMENT '0: 新增 1: 待审核 2: 已上架 3 已下架 4: 删除',
   `summary` varchar(255) NOT NULL,
+  `sale_agent` varchar(255) DEFAULT NULL,
+  `sale_price` decimal(20,2) DEFAULT NULL,
+  `sale_discount` decimal(20,2) DEFAULT NULL,
+  `sale_number` int(11) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`book_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
@@ -64,7 +81,7 @@ CREATE TABLE `book` (
 --  Records of `book`
 -- ----------------------------
 BEGIN;
-INSERT INTO `book` VALUES ('1', 'JavaScript高级程序设计', 'Nicholas', '1', '1', '9787115275790', '365', '3', '65', '2017-01-26', 'Zeus出版社', '3', '123'), ('2', 'JavaScript权威指南', 'Zeus', '2', '2', '9787115275791', '362', '4', '45', '2017-01-26', 'Zeus出版社', '3', '456'), ('3', 'JavaScript忍者秘籍', 'lvzimou', '3', '3', '9787115275792', '392', '5', '56', '2017-01-26', 'Zeus出版社', '5', '789');
+INSERT INTO `book` VALUES ('1', 'JavaScript高级程序设计', 'Nicholas', '1', 'https://images-cn.ssl-images-amazon.com/images/I/51voLbgpMiL.jpg', '9787115275790', '365', '3', '65.00', '2017-01-26', 'Zeus出版社', '3', '0', '这是一本很好的javasvript入门的书', '京东', '0.00', '0.00', null, 'eeeeee'), ('2', 'JavaScript权威指南', 'Zeus', '2', 'https://images-cn.ssl-images-amazon.com/images/I/51QWrj6sodL.jpg', '9787115275791', '362', '4', '45.00', '2017-02-26', 'Zeus出版社', '3', '1', '456', null, null, null, null, null), ('3', 'JavaScript忍者秘籍', 'lvzimou', '3', 'https://images-cn.ssl-images-amazon.com/images/I/51uDgHsT6aL.jpg', '9787115275792', '392', '6', '56.00', '2017-03-26', 'Zeus出版社', '5', '2', '789', null, '28.00', '50.00', null, null);
 COMMIT;
 
 -- ----------------------------
@@ -125,6 +142,59 @@ CREATE TABLE `order` (
   `book_price` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `trade`
+-- ----------------------------
+DROP TABLE IF EXISTS `trade`;
+CREATE TABLE `trade` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `trader_id` int(11) NOT NULL,
+  `trader_name` varchar(100) NOT NULL,
+  `be_trader_id` int(11) NOT NULL,
+  `be_trader_name` varchar(100) NOT NULL,
+  `trader_book_id` int(11) NOT NULL,
+  `trader_book_name` varchar(100) NOT NULL,
+  `be_trader_book_id` int(11) NOT NULL,
+  `be_trader_book_name` varchar(100) NOT NULL,
+  `trader_remark` varchar(255) NOT NULL,
+  `be_trader_remark` varchar(255) NOT NULL,
+  `start_date` varchar(20) NOT NULL,
+  `end_date` varchar(20) NOT NULL,
+  `days` int(10) NOT NULL,
+  `condition` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Records of `trade`
+-- ----------------------------
+BEGIN;
+INSERT INTO `trade` VALUES ('1', '1', 'zeus', '2', 'zero', '1', 'JavaScript高级程序设计', '2', 'JavaScript权威指南', 'ww', 'qq', '2017-02-12', '2017-02-17', '5', '1'), ('2', '2', 'zero', '3', 'carmon', '2', 'JavaScript权威指南', '3', 'JavaScript忍者秘籍', 'ww', 'qq', '2017-03-05', '2017-03-29', '24', '2'), ('3', '3', 'carmon', '1', 'zero', '3', 'JavaScript忍者秘籍', '1', 'JavaScript高级程序设计', 'ww', 'qq', '2017-03-03', '2017-03-28', '15', '3'), ('4', '1', 'zero', '3', 'carmon', '1', 'JavaScript高级程序设计', '3', 'JavaScript忍者秘籍', 'ww', 'qq', '2017-04-15', '2017-04-25', '20', '4');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `user`
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `sign` varchar(255) DEFAULT NULL,
+  `nickName` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Records of `user`
+-- ----------------------------
+BEGIN;
+INSERT INTO `user` VALUES ('1', 'zeus', null, null, null, null, null, null), ('2', 'zero', null, null, null, null, null, null), ('3', 'carmon', null, null, null, null, null, null);
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `zone`
