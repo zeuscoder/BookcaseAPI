@@ -9,7 +9,7 @@
  Target Server Version : 50716
  File Encoding         : utf-8
 
- Date: 05/10/2017 23:38:13 PM
+ Date: 05/13/2017 09:24:31 AM
 */
 
 SET NAMES utf8;
@@ -148,29 +148,30 @@ CREATE TABLE `order` (
 -- ----------------------------
 DROP TABLE IF EXISTS `trade`;
 CREATE TABLE `trade` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `trader_id` int(11) NOT NULL,
-  `trader_name` varchar(100) NOT NULL,
-  `be_trader_id` int(11) NOT NULL,
-  `be_trader_name` varchar(100) NOT NULL,
-  `trader_book_id` int(11) NOT NULL,
-  `trader_book_name` varchar(100) NOT NULL,
-  `be_trader_book_id` int(11) NOT NULL,
-  `be_trader_book_name` varchar(100) NOT NULL,
-  `trader_remark` varchar(255) NOT NULL,
-  `be_trader_remark` varchar(255) NOT NULL,
-  `start_date` varchar(20) NOT NULL,
-  `end_date` varchar(20) NOT NULL,
-  `days` int(10) NOT NULL,
-  `condition` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `trade_id` int(11) NOT NULL AUTO_INCREMENT,
+  `from_trader_id` int(11) NOT NULL,
+  `from_trader_name` varchar(100) NOT NULL,
+  `target_trader_id` int(11) NOT NULL,
+  `target_trader_name` varchar(100) NOT NULL,
+  `from_trader_book_id` int(11) NOT NULL,
+  `from_trader_book_name` varchar(100) NOT NULL,
+  `target_trader_book_id` int(11) NOT NULL,
+  `target_trader_book_name` varchar(100) NOT NULL,
+  `from_trader_remark` varchar(255) NOT NULL,
+  `target_trader_remark` varchar(255) NOT NULL,
+  `trade_start_date` varchar(20) NOT NULL,
+  `trade_end_date` varchar(20) NOT NULL,
+  `trade_days` int(10) NOT NULL,
+  `trade_condition` varchar(255) DEFAULT NULL,
+  `trade_deal_date` varchar(255) NOT NULL,
+  PRIMARY KEY (`trade_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `trade`
 -- ----------------------------
 BEGIN;
-INSERT INTO `trade` VALUES ('1', '1', 'zeus', '2', 'zero', '1', 'JavaScript高级程序设计', '2', 'JavaScript权威指南', 'ww', 'qq', '2017-02-12', '2017-02-17', '5', '1'), ('2', '2', 'zero', '3', 'carmon', '2', 'JavaScript权威指南', '3', 'JavaScript忍者秘籍', 'ww', 'qq', '2017-03-05', '2017-03-29', '24', '2'), ('3', '3', 'carmon', '1', 'zero', '3', 'JavaScript忍者秘籍', '1', 'JavaScript高级程序设计', 'ww', 'qq', '2017-03-03', '2017-03-28', '15', '3'), ('4', '1', 'zero', '3', 'carmon', '1', 'JavaScript高级程序设计', '3', 'JavaScript忍者秘籍', 'ww', 'qq', '2017-04-15', '2017-04-25', '20', '4');
+INSERT INTO `trade` VALUES ('1', '1', 'zeus', '2', 'zero', '1', 'JavaScript高级程序设计', '2', 'JavaScript权威指南', 'ww', 'qq', '2017-02-12', '2017-02-17', '5', '1', '2017-02-01'), ('2', '2', 'zero', '3', 'carmon', '2', 'JavaScript权威指南', '3', 'JavaScript忍者秘籍', 'ww', 'qq', '2017-03-05', '2017-03-29', '24', '2', '2017-03-01'), ('3', '3', 'carmon', '1', 'zero', '3', 'JavaScript忍者秘籍', '1', 'JavaScript高级程序设计', 'ww', 'qq', '2017-03-03', '2017-03-28', '15', '3', '2017-03-05'), ('4', '1', 'zero', '3', 'carmon', '1', 'JavaScript高级程序设计', '3', 'JavaScript忍者秘籍', 'ww', 'qq', '2017-04-15', '2017-04-25', '20', '4', '2017-04-01');
 COMMIT;
 
 -- ----------------------------
@@ -187,7 +188,7 @@ CREATE TABLE `user` (
   `gender` varchar(255) DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `user`
